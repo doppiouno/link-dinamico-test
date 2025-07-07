@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Link Dinamico</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 80px;
+    }
+    a {
+      font-size: 22px;
+      color: #0077cc;
+      text-decoration: none;
+    }
+    #counter {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔁 Link Dinamico Ogni 5 Click</h1>
+  <p>Link attuale: <span id="linkText">https://s1.esempio.com/</span></p>
+  <a id="dynamicLink" href="https://s1.esempio.com/" target="_blank">👉 Clicca qui</a>
+  <p id="counter">(0 click)</p>
+
+  <script>
+    const subdomains = ["s1", "s2", "s3", "s4", "s5"];
+    const domain = "esempio.com";
+    let clicks = 0;
+    let currentIndex = 0;
+
+    const link = document.getElementById("dynamicLink");
+    const linkText = document.getElementById("linkText");
+    const counter = document.getElementById("counter");
+
+    function updateLink() {
+      const fullURL = `https://${subdomains[currentIndex]}.${domain}/`;
+      link.href = fullURL;
+      linkText.textContent = fullURL;
+    }
+
+    link.addEventListener("click", () => {
+      clicks++;
+      counter.textContent = `(${clicks} click${clicks === 1 ? '' : 's'})`;
+
+      if (clicks % 5 === 0) {
+        currentIndex = (currentIndex + 1) % subdomains.length;
+        updateLink();
+        alert("✅ Link aggiornato!");
+      }
+    });
+
+    updateLink();
+  </script>
+</body>
+</html>
